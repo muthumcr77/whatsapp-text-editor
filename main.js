@@ -4,17 +4,35 @@ let selText = "";
 
 // JQuery 
 $(function(){
+  // Initialize clipboard target
+  var clipboard = new ClipboardJS('#copyButton', {
+    container: document.getElementById("myText")
+  });  
+  
+  clipboard.on('success', function(e) {
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+    
+    e.clearSelection();
+  });    
+  
+  clipboard.on('error', function(e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+  });    
+  
   // Initialize tooltips
   const tooltipTriggerList = $('[data-bs-toggle="tooltip"]')
   tooltipTriggerList.each(function(){
     new bootstrap.Tooltip(this);
   })
-
+  
   $("textarea").focus(function(){
     fullText = $("#myText").val();
     console.log(fullText);
   });
-
+  
   // Format type selected
   $(".ftBtn").click(function(){
     var myId = $(this).attr("id");
@@ -35,17 +53,17 @@ $(function(){
     }
   });
 });
-
-
+        
+        
 // Copy formatted message to clipboard
 const copyToClipboard = () => {
   var txt = document.getElementById("myText").value;
   if (txt == "")
-    alert('Your message is empty!');
+  alert('Your message is empty!');
   else
-    navigator.clipboard.writeText(txt).then(() => {
-      alert("Copied to clipboard!");
-    });
+  navigator.clipboard.writeText(txt).then(() => {
+    alert("Copied to clipboard!");
+  });
 }
 
 // Get selected text from document
@@ -66,8 +84,7 @@ const getSelectionText = () => {
 }
 
 // Assign selected text upon event trigger
-document.onmouseup /*= document.onkeyup = document.onselectionchange*/ = function() {
+document.onmouseup = document.onkeyup = document.onselectionchange = function() {
   selText = getSelectionText();
   console.log("Checking selected text: " + selText);
 };
-

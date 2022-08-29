@@ -88,3 +88,30 @@ document.onmouseup = document.onkeyup = document.onselectionchange = function() 
   selText = getSelectionText();
   console.log("Checking selected text: " + selText);
 };
+
+// Change to JQuery
+let fullTxt = "";
+let selectTxt = "";
+
+const element = document.getElementById("myId");
+
+element.addEventListener("input", function(){
+  fullTxt = element.value;
+});
+
+element.addEventListener("mouseout", function(){
+  console.log("Full text: " + fullTxt);
+  selectTxt = window.getSelection().toString();
+  console.log("Selected text: " + selectTxt);
+});
+
+// Action to compare FullTxt & selectTxt
+// Trim selected text if any spaces
+let oldString = selectTxt.trim();
+let newString = fullText.replace(oldString, "");
+let editedString = ""; // Check switch condition
+let formattedString = newString.concat(editedString);
+
+// Change text area's innerText/innerHtml to formattedString
+
+
